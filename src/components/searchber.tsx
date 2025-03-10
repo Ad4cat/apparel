@@ -39,9 +39,9 @@ const Searchber = () => {
       {isSearchVisible && (
         <div
           ref={searchRef}
-          className="flex items-center w-auto p-2 gap-2 border border-gray-500 rounded-lg"
+          className="flex items-center w-auto p-2 gap-2 border border-gray-500 rounded-lg backdrop-blur-md"
         >
-          <Search className="hover:scale-110 transition-transform duration-200" />
+          <Search className="hover:text-rose-600 transition-colors cursor-pointer" />
           <Searchbutton />
         </div>
       )}

@@ -2,6 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 
+import { OnUserCreate } from "../../component/supabaseFunctions";
+
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
@@ -48,12 +50,22 @@ export async function POST(req: Request) {
   }
 
   // Do something with payload
-  // For this guide, log payload to console
-  const { id } = evt.data;
+  const id = evt.data.id as string;
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    console.log("userId:", id);
+    console.log("data:", evt.data);
+    const email =
+      evt.data.email_addresses && evt.data.email_addresses.length > 0
+        ? evt.data.email_addresses[0].email_address
+        : null;
+
+    if (email) {
+      console.log(email);
+      await OnUserCreate(id, email);
+    } else {
+      console.error("No email found for user.");
+    }
   }
 
   return new Response("Webhook received", { status: 200 });

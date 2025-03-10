@@ -1,22 +1,25 @@
 import React from "react";
-import { Heart, ShoppingCart, House, Menu } from "lucide-react";
+import { Heart, House, Menu } from "lucide-react";
 import UserIcon from "./usericon";
 import Link from "next/link";
-import Searchber from "./serchber";
+import Searchber from "./searchber";
+import ShoppingCartCom from "./ShoppingCart";
 
 const Header = () => {
   return (
     // 固定, 以下のdivをbetweenかつ中央(水平方向)で一番前にする
     <>
-      <div className="fixed inset-0 h-16 bg-gray-50 border-b border-white opacity-55 z-header_bg" />
+      <div className="fixed inset-0 h-16 bg-gray-200 border-b border-white opacity-55 z-header_bg" />
       <div
         className="fixed flex justify-between items-center h-16 w-full px-6 z-header_strings"
         id="#"
       >
-        <div className="flex items-center space-x-2">
-          <House />
+        <div className="flex items-center">
           <Link href="/" className="ml-2 text-xl font-bold">
-            BLAND NAME
+            <div className="flex items-center space-x-1">
+              <House />
+              <p>BLAND NAME</p>
+            </div>
           </Link>
         </div>
         <div
@@ -24,17 +27,10 @@ const Header = () => {
           className="absolute left-1/2 transform -translate-x-1/2 flex space-x-8 text-xl"
         >
           <Link
-            href="/women"
+            href="/products"
             className="hidden lg:flex text-black font-semibold hover:text-rose-600 transition-colors cursor-pointer"
           >
-            Women
-          </Link>
-          {/* <p className="hidden lg:flex">|</p> */}
-          <Link
-            href="/men"
-            className="hidden lg:flex text-black font-semibold hover:text-rose-600 transition-colors cursor-pointer"
-          >
-            Men
+            ALL
           </Link>
           {/* <p className="hidden lg:flex">|</p> */}
           <Link
@@ -54,9 +50,7 @@ const Header = () => {
         <div className="flex px-4 space-x-7 items-center">
           <Searchber />
           <Heart className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer" />
-          <Link href="cart">
-            <ShoppingCart className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer" />
-          </Link>
+          <ShoppingCartCom />
           <UserIcon />
           <Menu className="lg:hidden text-gray-700 hover:text-rose-600 transition-colors cursor-pointer" />
         </div>

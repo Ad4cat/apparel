@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const About_us = () => {
@@ -18,10 +19,12 @@ const About_us = () => {
           <p className="mt-4 text-lg text-gray-500"></p>
         </div>
         <div className="w-1/2 pl-4 p-10">
-          <img
+          <Image
             className="w-full rounded-lg shadow-lg p-3"
             src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000"
             alt="About us"
+            width={1000}
+            height={1000}
           />
         </div>
       </div>

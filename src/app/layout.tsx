@@ -8,6 +8,8 @@ import {
   // SignedOut,
   // UserButton,
 } from "@clerk/nextjs";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import CartProvider from "./providers/CartProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +37,14 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          <CartProvider>
+            {/* <ToastProvider /> */}
+            {/* <TopBanner /> */}
+            {/* <Navbar /> */}
+            {/* <Footer /> */}
+            <SpeedInsights />
+            {children}
+          </CartProvider>
         </body>
       </html>
     </ClerkProvider>
