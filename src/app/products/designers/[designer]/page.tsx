@@ -1,4 +1,5 @@
 import { unauth_supabase } from "@/supabase";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 const supabase = unauth_supabase;
@@ -57,7 +58,7 @@ export default async function DesignerPage({ params }: DesignerPageProps) {
             >
               {product.image_url && (
                 <div className="aspect-square w-full overflow-hidden rounded-md mb-3">
-                  <img
+                  <Image
                     src={product.image_url}
                     alt={product.name}
                     className="h-full w-full object-cover object-center"

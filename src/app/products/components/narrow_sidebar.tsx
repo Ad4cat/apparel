@@ -20,9 +20,9 @@ export default async function Narrow_sidebar() {
   }
 
   // 取得したデータの処理
-  console.log("Products Variants:", products_variants);
-  console.log("Categories:", category);
-  console.log("Designers:", designers);
+  // console.log("Products Variants:", products_variants);
+  // console.log("Categories:", category);
+  // console.log("Designers:", designers);
 
   // ABC順
   const uniqueColors = [
@@ -39,7 +39,7 @@ export default async function Narrow_sidebar() {
     .map((item) => item.CategoryName)
     .sort((a, b) => a.localeCompare(b, "ja"));
 
-  const Designers = [
+  const Designers: string[] = [
     ...new Set(designers.map((designers) => designers.name)),
   ].sort();
 

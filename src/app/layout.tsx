@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {
-  ClerkProvider,
-  // SignInButton,
-  // SignedIn,
-  // SignedOut,
-  // UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import CartProvider from "./providers/CartProvider";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,12 +33,11 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <CartProvider>
-            {/* <ToastProvider /> */}
-            {/* <TopBanner /> */}
-            {/* <Navbar /> */}
-            {/* <Footer /> */}
-            <SpeedInsights />
-            {children}
+            <SidebarProvider>
+              {/* <SidebarTrigger /> */}
+              {children}
+              <SpeedInsights />
+            </SidebarProvider>
           </CartProvider>
         </body>
       </html>

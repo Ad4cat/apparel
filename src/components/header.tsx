@@ -1,11 +1,16 @@
+"use client";
+
 import React from "react";
-import { Heart, House, Menu } from "lucide-react";
+import { Heart, House } from "lucide-react";
 import UserIcon from "./usericon";
 import Link from "next/link";
 import Searchber from "./searchber";
 import ShoppingCartCom from "./ShoppingCart";
+import Hamburger from "./hamburger";
+// import { usePathname } from "next/navigation";
 
 const Header = () => {
+  // const pathname = usePathname();
   return (
     // 固定, 以下のdivをbetweenかつ中央(水平方向)で一番前にする
     <>
@@ -35,24 +40,28 @@ const Header = () => {
           {/* <p className="hidden lg:flex">|</p> */}
           <Link
             className="hidden lg:flex text-black font-semibold hover:text-rose-600 transition-colors cursor-pointer scroll-mt-16"
-            href="#latest"
+            href="/#latest"
           >
             Latest Arrivals
           </Link>
           {/* <p className="hidden lg:flex">|</p> */}
           <Link
             className="hidden lg:flex text-black font-semibold hover:text-rose-600 transition-colors cursor-pointer"
-            href="#lookbook"
+            href="/#lookbook"
           >
             LOOK BOOK
           </Link>
         </div>
         <div className="flex px-4 space-x-7 items-center">
-          <Searchber />
+          <div className="hidden lg:block">
+            <Searchber />
+          </div>
           <Heart className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer" />
           <ShoppingCartCom />
           <UserIcon />
-          <Menu className="lg:hidden text-gray-700 hover:text-rose-600 transition-colors cursor-pointer" />
+          <div className="lg:hidden">
+            <Hamburger />
+          </div>
         </div>
       </div>
     </>

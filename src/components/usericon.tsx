@@ -4,7 +4,7 @@ import React from "react";
 
 const UserIcon = () => {
   return (
-    <div className="flex items-center text-gray-700 hover:text-rose-600 transition-colors cursor-pointer">
+    <div className="hidden lg:flex items-center text-gray-700 hover:text-rose-600 transition-colors cursor-pointer">
       <SignedIn>
         <UserButton />
       </SignedIn>

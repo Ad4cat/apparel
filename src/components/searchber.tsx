@@ -27,21 +27,40 @@ const Searchber = () => {
     document.addEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const down = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "/") {
+        e.preventDefault();
+        setSearchVisible((prev) => !prev);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [setSearchVisible]);
+
   return (
     <>
       {!isSearchVisible && (
-        <Search
-          className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer "
+        <div
+          className="border border-gray-300 rounded-lg p-2 space-x-1 hover:opacity-80 cursor-pointer"
           onClick={toggleSearchBer}
-        />
+        >
+          <div className="flex items-center space-x-1">
+            <Search className="hidden lg:flex text-gray-400 hover:cursor-pointer w-4 h-4" />
+            <div className="flex justify-center items-center text-gray-500 text-xs">
+              <span>press &apos; / &apos;</span>
+            </div>
+          </div>
+        </div>
       )}
 
       {isSearchVisible && (
         <div
           ref={searchRef}
-          className="flex items-center w-auto p-2 gap-2 border border-gray-500 rounded-lg backdrop-blur-md"
+          className="flex items-center w-auto p-2 gap-2 border border-gray-300 rounded-lg backdrop-blur-md"
         >
-          <Search className="hover:text-rose-600 transition-colors cursor-pointer" />
+          <Search className="text-gray-400 hover:cursor-pointer w-4 h-4" />
           <Searchbutton />
         </div>
       )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -24,23 +25,40 @@ export default function FilterChange({
   category: string[];
   designer: string[];
 }) {
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedDesigner, setSelectedDesigner] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  //   Displays(selectedColor, selectedSize, selectedCategory, selectedDesigner);
+  // 初期値を URL から取得する例
+  const initialColor = searchParams.get("color") || "all";
+  const initialSize = searchParams.get("size") || "all";
+  const initialCategory = searchParams.get("category") || "all";
+  const initialDesigner = searchParams.get("designer") || "all";
+
+  const [selectedColor, setSelectedColor] = useState(initialColor);
+  const [selectedSize, setSelectedSize] = useState(initialSize);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedDesigner, setSelectedDesigner] = useState(initialDesigner);
+
+  const updateQuery = (key: string, value: string) => {
+    const currentParams = new URLSearchParams(
+      Array.from(searchParams.entries())
+    );
+    currentParams.set(key, value);
+    router.push(`?${currentParams.toString()}`);
+  };
 
   return (
-    <div className="sticky top-0 z-50 bg-white shadow-md p-2">
-      <div className="flex items-center space-x-4 overflow-x-auto px-2 py-2 scrollbar-hide">
+    <div className="sticky top-0 z-50 bg-white shadow-md p-2 w-full">
+      <div className="flex items-center space-x-4 overflow-x-auto px-2 py-2 scrollbar-hide w-full max-w-6xl mx-auto">
         {/* color */}
         <div className="flex flex-col min-w-[180px]">
           <h1 className="p-1 text-sm">Color</h1>
           <Select
-            defaultValue="ALL"
             value={selectedColor}
-            onValueChange={setSelectedColor}
+            onValueChange={(value) => {
+              setSelectedColor(value);
+              updateQuery("color", value);
+            }}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a Color" />
@@ -48,15 +66,13 @@ export default function FilterChange({
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">ALL</SelectItem>
-                {colors.map((color) => (
+                {colors.map((color: string) => (
                   <SelectItem key={color} value={color}>
                     <div className="flex items-center space-x-2">
-                      {/* 色を表示する円 */}
                       <span
                         className="w-4 h-4 rounded-full border border-gray-300"
                         style={{ backgroundColor: color }}
                       ></span>
-                      {/* 色名 */}
                       <span>{color}</span>
                     </div>
                   </SelectItem>
@@ -69,14 +85,20 @@ export default function FilterChange({
         {/* size */}
         <div className="flex flex-col min-w-[180px]">
           <h1 className="p-1 text-sm">Size</h1>
-          <Select value={selectedSize} onValueChange={setSelectedSize}>
+          <Select
+            value={selectedSize}
+            onValueChange={(value) => {
+              setSelectedSize(value);
+              updateQuery("size", value);
+            }}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">ALL</SelectItem>
-                {size.map((size) => (
+                {size.map((size: string) => (
                   <SelectItem key={size} value={size}>
                     {size}
                   </SelectItem>
@@ -89,16 +111,22 @@ export default function FilterChange({
         {/* category */}
         <div className="flex flex-col min-w-[180px]">
           <h1 className="p-1 text-sm">Category</h1>
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <Select
+            value={selectedCategory}
+            onValueChange={(value) => {
+              setSelectedCategory(value);
+              updateQuery("category", value);
+            }}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">ALL</SelectItem>
-                {category.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
+                {category.map((cat: string) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -109,16 +137,22 @@ export default function FilterChange({
         {/* designer */}
         <div className="flex flex-col min-w-[180px]">
           <h1 className="p-1 text-sm">Designer</h1>
-          <Select value={selectedDesigner} onValueChange={setSelectedDesigner}>
+          <Select
+            value={selectedDesigner}
+            onValueChange={(value) => {
+              setSelectedDesigner(value);
+              updateQuery("designer", value);
+            }}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">ALL</SelectItem>
-                {designer.map((designer) => (
-                  <SelectItem key={designer} value={designer}>
-                    {designer}
+                {designer.map((d: string) => (
+                  <SelectItem key={d} value={d}>
+                    {d}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -145,7 +179,7 @@ export default function FilterChange({
               placeholder="123,456"
               className="w-1/2"
             />
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" className="aspect-square">
               <Search />
             </Button>
           </div>
